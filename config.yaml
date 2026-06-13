@@ -1,0 +1,75 @@
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  artefacts_dir: "artefacts"
+  results_dir: "results"
+  db_path: "data/expert_prior_engine.db"
+  target_col: "class"
+  date_col: "year"
+  train_years: [1, 2, 3]
+  test_years: [4, 5]
+
+woe:
+  n_bins: 10
+  iv_threshold: 0.02
+  laplace_smoothing: 0.5
+
+models:
+  lr:
+    C: 1.0
+    solver: "lbfgs"
+    max_iter: 1000
+    class_weight: "balanced"
+  xgb:
+    n_estimators: 2000          # plateau at ~1305 with these hyperparams; cap=2000 gives headroom
+    max_depth: 4
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    early_stopping_rounds: 50   # widened from 30 — eval log-loss only flattens after ~1300 iter
+    calibration_method: "isotonic"
+    calibration_cv: "prefit"
+    calibration_val_frac: 0.15
+
+bootstrap:
+  n_resamples: 1000
+  ci_level: 0.95
+  seed: 42
+
+psi:
+  stable_threshold: 0.1
+  monitor_threshold: 0.2
+  epsilon: 1.0e-6
+
+llm:
+  ollama_base_url: "http://localhost:11434"
+  temperature: 0
+  n_borrower_profiles: 10
+  n_category_profiles: 8
+
+bradley_terry:
+  n_bootstrap_validation: 100
+  cv_threshold: 0.3
+
+popper:
+  alpha: 0.10
+  kappa: 0.50
+  max_rounds: 10
+
+analyst_sim:
+  n_analysts: 5
+  n_companies: 20
+  heterogeneity_sd: 0.3
+  half_life_days: 180
+  min_defaults_for_mle: 30
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+
+colours:
+  primary: "#2563eb"
+  secondary: "#dc2626"
+  tertiary: "#16a34a"
+  neutral: "#6b7280"
+  background: "#f8fafc"

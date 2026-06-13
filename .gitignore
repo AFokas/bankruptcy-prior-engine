@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.coverage
+.venv/
+venv/
+
+# Notebooks
+.ipynb_checkpoints/
+notebooks/__marimo__/
+
+# Project artefacts (regenerable)
+artefacts/
+data/raw/
+data/processed/
+data/*.db
+data/*.db-journal
+*.joblib
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
